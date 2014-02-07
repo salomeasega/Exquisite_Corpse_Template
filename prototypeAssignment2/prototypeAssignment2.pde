@@ -1,3 +1,5 @@
+//genral prototype of what I want it to do/ look like 
+
 int appWidth  = 1280;
 int appHeight = 720;
 
@@ -58,9 +60,9 @@ void draw() {
     jitter = random(-0.1, 0.1); //to be controled by mouse or slider
   }
   angle = angle + jitter;
-  //float c = cos(angle);
+  float c = cos(angle);
   //translate(width, height);
-  // rotate(c);
+  rotate(c);
   //or use this for different effect  
   rotate(radians(0)); //could also make radians a slider
   // tint(0, 244, 20); //to be controled by slider maped to 0-255
