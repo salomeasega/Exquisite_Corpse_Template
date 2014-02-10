@@ -4,7 +4,7 @@ import spacebrew.*;
 
 // Spacebrew stuff
 String server = "sandbox.spacebrew.cc";
-String name   = "ExquisiteCorpse_YOUR_NAME_HERE!";
+String name   = "Thirty_Second_The_Illfigure!";
 String desc   = "Some stuff";
 
 Spacebrew sb;
@@ -19,124 +19,133 @@ int corpseStarted   = 0;
 boolean bDrawing    = false;
 boolean bNeedToClear = false;
 
-//JN stuff
+//----JN stuff start
 int rate = 60; 
 int slide = 1280;
 
 float angle;
 float jitter;
 
-float x = 100;
-float y = 100;
-float xspeed = 1;
-float yspeed = 3.3;
+float xj = 855;
+float yj = 100;
+float xjspeed = 1;
+float yjspeed = 3.3;
 
-PImage myImage;
+PImage myImagej;
+PImage myImagej2;
+PImage myImagej3;
 
-void setup(){
+int slide_it_x = 955;
+int slide_it_y = 350;
+
+int jr = 60;
+int jg = 40;
+int jb = 200;
+//----JN stuff end
+
+void setup() {
   size( appWidth, appHeight );
   smooth();
-  
+
   sb = new Spacebrew(this);
   sb.addPublish("doneExquisite", "boolean", false);
   sb.addPublish("slide", "range"); //jn slider 
   sb.addSubscribe("startExquisite", "boolean");
-  
-  myImage = loadImage("excorpse.png");//j loading image
 
- 
-  
   // add any of your own subscribers here!
-    sb.addSubscribe("rate", "range"); //jn slider
+  sb.addSubscribe("slide_it_x", "range"); //jn slider
+  sb.addSubscribe("slide_it_y", "range"); //jn slider
+  sb.addSubscribe("jr", "range");
+  sb.addSubscribe("jg", "range");
+  sb.addSubscribe("jb", "range");
 
-  
   sb.connect( server, name, desc );
+  
+//-----JN loading image start 
+  myImagej = loadImage("excorpse.png");
+  myImagej2 = loadImage ("shapeimage_1.png");
+  myImagej3 = loadImage ("man-ray-yves-tanguy-joan-miro-max-morise-2-192x300.png");
+//-----JN loading image end 
+
+
 }
 
-void draw(){
+void draw() {
   // this will make it only render to screen when in EC draw mode
+
+
   if (!bDrawing) return;
   
+//  if (!bDrawing) bDrawing = true; //uncomment to use with out slider
+
   // blank out your background once
-  if ( bNeedToClear ){
+  if ( bNeedToClear ) {
     bNeedToClear = false;
     background(0); // feel free to change the background color!
   }
-  
+
   // ---- start person 1 ---- //
-  if ( millis() - corpseStarted < 10000 ){
+  if ( millis() - corpseStarted < 10000 ) {
     noFill();
     stroke(255);
-    rect(0,0, width / 3.0, height );
+    rect(0, 0, width / 3.0, height );
     fill(255);
-  
-  // ---- start person 2 ---- //
-  } else if ( millis() - corpseStarted < 20000 ){
+
+    // ---- start person 2 ---- //
+  } 
+  else if ( millis() - corpseStarted < 20000 ) {
     noFill();
     stroke(255);
-    rect(width / 3.0,0, width / 3.0, height );
+    rect(width / 3.0, 0, width / 3.0, height );
     fill(255);
-    
-  // ---- start person 3 ---- JN// 
-  } else if ( millis() - corpseStarted < 30000 ){
+
+    // ---- start person 3 ---- JN//
+  } 
+  else if ( millis() - corpseStarted < 30000 ) {
     noFill();
     stroke(255);    
-    rect(width * 2.0/ 3.0,0, width / 3.0, height );
+    rect(width * 2.0/ 3.0, 0, width / 3.0, height );
     noFill();
     // Add the current speed to the location.
-  x = x + xspeed;
-  y = y + yspeed;
-  // Check for bouncing
-  if ((x > width) || (x < 0)) {
-    xspeed = xspeed * -1;
-  }
-  if ((y > height) || (y < 0)) {
-    yspeed = yspeed * -1;
-  }
-  // Display at x,y location
-  stroke(0);
-  fill(175);
-  //translate(853, height);
-  ellipse(mouseX, y, 16, 16);
+    xj = xj + xjspeed;
+    yj = yj + yjspeed;
+    // Check for bouncing
+    if ((xj > width) || (xj < 855)) {
+      xjspeed = xjspeed * -1;
+    }
+    if ((yj > height) || (yj < 0)) {
+      yjspeed = yjspeed * -1;
+    }
+    // Display at x,y location
+    stroke(0);
+    fill(175);
+    int jnx = constrain(slide_it_x, 855, 1280);
+    int jny = constrain(slide_it_y, 20, 700);
+//    ellipse(slide_it_x, slide_it_y, 16, 16);
+    tint(jr, jg, jb);
+    image(myImagej, xj, slide_it_y); 
+    image(myImagej3, jnx, jny);
+    image(myImagej2, jnx, yj);
 
-   if (second() % 2 == 0) {  
-    jitter = random(-0.1, 0.1); //to be controled by mouse or slider
-  }
-  angle = angle + jitter;
-  //float c = cos(angle);
-  //translate(width, height);
-  // rotate(c);
-  //or use this for different effect  
-  rotate(radians(0)); //could also make radians a slider
-  // tint(0, 244, 20); //to be controled by slider maped to 0-255
-x = x + xspeed;
-  y = y + yspeed;
-  // Check for bouncing
-  if ((x > width) || (x < 0)) {
-    xspeed = xspeed * -1;
-  }
-  if ((y > height) || (y < 0)) {
-    yspeed = yspeed * -1;
-  }
-   image(myImage, x, mouseY); 
-    
-  
-  //make stuff happen here:
-  
-  // ---- we're done! ---- //
-  } else {
+
+
+    //make stuff happen here:
+
+    // ---- we're done! ---- //
+  } 
+  else {
     sb.send( "doneExquisite", true );
     bDrawing = false;
   }
 }
 
-void mousePressed(){
+void mousePressed() {
   // for debugging, comment this out!
   sb.send( "doneExquisite", true );
 }
 
-void onBooleanMessage( String name, boolean value ){
-  if ( name.equals("startExquisite") ){
+void onBooleanMessage( String name, boolean value ) {
+  if ( name.equals("startExquisite") ) {
     // start the exquisite corpse process!
     bDrawing = true;
     corpseStarted = millis();
@@ -144,10 +153,23 @@ void onBooleanMessage( String name, boolean value ){
   }
 }
 
-void onRangeMessage( String name, int value ){
+void onRangeMessage( String name, int value ) {
+
+//------JN Slider stuff start
+  if(name.equals("slide_it_x")){
+    slide_it_x = value;
+}else if(name.equals("slide_it_y")){
+    slide_it_y = value;
+}else if(name.equals("jr")){
+  jr=int(random(map(value, 0, 1230, 10, 255)));
+}else if(name.equals("jg")){
+  jg=int(random(map(value, 0, 1230, 10, 255)));
+}else if(name.equals("jb")){
+  jb=int(random(map(value, 0, 1230, 100, 255)));
 }
 
-void onStringMessage( String name, String value ){
+//-----JN Slider stuff end
 }
-
+void onStringMessage( String name, String value ) {
+}
 
