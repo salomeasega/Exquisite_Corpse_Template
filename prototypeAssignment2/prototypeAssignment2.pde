@@ -6,7 +6,7 @@ int appHeight = 720;
 float angle;
 float jitter;
 
-float x = 100;
+float x = 853;
 float y = 100;
 float xspeed = 1;
 float yspeed = 3.3;
@@ -38,18 +38,23 @@ void draw() {
   // Add the current speed to the location.
   x = x + xspeed;
   y = y + yspeed;
+  
+  if(x < 1280 ){
+    x = xspeed*(-1);
+  } k 
+   
   // Check for bouncing
-  if ((x > width) || (x < 0)) {
-    xspeed = xspeed * -1;
-  }
-  if ((y > height) || (y < 0)) {
-    yspeed = yspeed * -1;
-  }
+//  if ((x > width) || (x < 0)) {
+//    xspeed = xspeed * -1;
+//  }
+//  if ((y > height) || (y < 0)) {
+//    yspeed = yspeed * -1;
+//  }
   // Display at x,y location
   stroke(0);
   fill(175);
   //translate(853, height);
-  ellipse(mouseX, y, 16, 16);
+  ellipse(x, y, 16, 16);
 //  image(myImage, mouseX, mouseY);
 //    image(myImage2, 700, mouseY);
 //    image(myImage3, mouseX, 875);
